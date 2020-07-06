@@ -1,15 +1,15 @@
 ---
 layout: post
 title: "Debugging the Network System Role"
-categories: debug, gsoc
+tags: gsoc linux-system-roles floss
 author:
 - Elvira G.
 meta: "GSOC"
 ---
 
 On this post I want to show the current process of debugging for the network
-role and the reasons to add Pytest as tool for the integration tests, which is
-my task during the summer!
+system role and the reasons to add Pytest as tool for the integration tests,
+which is my task during the summer!
 
 ## Intro to the Network Role
 
@@ -20,7 +20,7 @@ configure systems, deploy software, and orchestrate more advanced IT tasks such
 as continuous deployments or zero downtime rolling updates." 
 
 An Ansible Role is a framework that manages collections of tasks and variables
-independently. Each tole has a particular functionality. This said, [Linux
+independently. Each role has a particular functionality. This said, [Linux
 System Roles](https://linux-system-roles.github.io/) are a collection of
 Ansible Roles that admin the configuration of common GNU/Linux subsystems. The
 aim of Linux System Roles is to give a consistent API to a Linux distribution
@@ -37,7 +37,7 @@ but they present some problems when being used to make these tests.
 
 ## Current debugging workflow
 
-So, how to procede if the current integration tests end with errors? First of
+So, how to proceed if the current integration tests end with errors? First of
 all, since there is not a totally reliable source on the output that tells the
 developer if the role had an unexpected error. Right now, the best way of
 knowing this is returning the exit code of the process with the command `echo $?`.
@@ -63,8 +63,8 @@ network_provider=initscripts
  - `ansible-playbook -v` - The command that execute the playbooks with the flag
    verbose
  - `-i /path/to/inventory` - The inventory flag points to a script that sets
-   the configuration for the testing. Is this script that enables the variables
-`TEST_DEBUG` and `TEST_SUBJECTS`
+   the configuration for the testing. This script enables the variables
+`TEST_DEBUG` and `TEST_SUBJECTS`.
  - `/path/to/test.yml`
  - `--skip-tags test::cleanup` - This flag indicates the playbook to not
    execute the playbook blocks that have "test::cleanup" as a tag. Adding it
