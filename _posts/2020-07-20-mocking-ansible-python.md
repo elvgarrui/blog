@@ -67,7 +67,7 @@ module into a folder.
 
 ## The code
 
-```
+{% highlight python %}
  with mock.patch.object(                                                         
      sys,                                                                        
      "path",                                                                     
@@ -78,7 +78,7 @@ module into a folder.
          {"ansible": mock.Mock(), "ansible.module_utils": __import__("module_utils")},
      ):                                                                          
          import library.network_connections as nc 
-```
+{% endhighlight %}
 
 ### Changing sys.path 
 

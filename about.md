@@ -4,21 +4,25 @@ title: About
 permalink: /about/
 ---
 
-Hi! My name is Elvira. I'm a Software engineer who is currently finishing her
-master on Computation and AI, and who is passionate about **free software**.
+Hi! My name is Elvira. I'm a Associate (Junior) Software engineer working at
+**Red Hat**.  I'm passionate about **free software**.
 
-I'm currently contributing to [**Linux System
-Roles**](https://linux-system-roles.github.io/). My main task right now is to
-improve the Network role.
+I'm currently contributing to
+[**Neutron**](https://docs.openstack.org/neutron/latest/), a project inside of
+**Openstack** that provides Networking connectivity and implements the
+Openstack Networking API. I mostly participate in issues that are related to
+the Neutron OVN driver.
 
-I've contributed to several research articles at the University of Seville:
-- [A general approach to Software Product Line
-  testing.](https://biblioteca.sistedes.es/articulo/a-general-approach-to-software-product-line-testing/)
-- [Data-Analytics Modeling of Electrical Impedance Measurements for Cell
-  Culture Monitoring.](https://www.mdpi.com/1424-8220/19/21/4639)
-- [Variability management in a software product line unaware company: towards a
-  real
-evaluation.](https://www.researchgate.net/publication/335058684_Variability_Management_in_a_Software_Product_Line_Unaware_Company_Towards_a_Real_Evaluation)
+I've also contributed to [**Linux System
+Roles**](https://linux-system-roles.github.io/) as part of the Google Summer of
+Code program. My main task was to improve the Network role. The community was
+welcoming and I encourage anyone who is interested on free software to take a
+look at this or any other Fedora project. I learnt quite a lot, it was a great
+opportunity.
 
-🌿 Please do not hesitate to contact me if you want more info or if you see
-anything wrong on my blog 🌿
+Previous to that, I contributed to several research articles at the University
+of Seville. You can check them on [**Google
+Scholar**](https://scholar.google.com/citations?user=guYINIAAAAAJ&hl=en).
+
+🌿 Do not hesitate to contact me if you need anything or if you see
+something wrong on my blog 🌿
