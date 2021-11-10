@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-Hi! My name is Elvira. I'm a Associate (Junior) Software engineer working at
+Hi! My name is Elvira. I'm an Associate (Junior) Software engineer working at
 **Red Hat**.  I'm passionate about **free software**.
 
 I'm currently contributing to

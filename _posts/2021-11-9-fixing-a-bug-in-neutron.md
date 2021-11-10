@@ -7,17 +7,18 @@ author:
 meta: "neutron OVN"
 ---
 
-This post is a really basic introduction to how to start **developing** for
-Neutron. The goal is to provide an insight of what the workflow is  and which
-tools you need when fixing a bug in the project. I can hopefully help anyone
+This post is a really basic introduction on how to start **developing** for
+Neutron. The goal is to provide an idea of what the workflow is and which
+tools you need when fixing a bug in the project. Hopefully, I can help anyone
 interested in making a first contribution to the project! Please use this
 together with Neutron's official [**Contributor's
 Guide**](https://docs.openstack.org/neutron/latest/contributor/index.html).
 
+This blog post assumes you are familiar with git and python coding.
 
 ## Intro to Neutron
 
-**Openstack** is a cloud software that has multiple use cases and it's widely
+**Openstack** is cloud software that has multiple use cases and is widely
 used all over the world. It is a set of multiple components, and not every
 component is needed for every deployment ([See this
 page](https://www.openstack.org/software/sample-configs#compute-starter-kit)
@@ -25,31 +26,34 @@ for some examples).
 
 There are some components that must be present regardless of the use case.
 Neutron, also known as the Openstack Networking Service, is one of them. It
-manages the all the virtual network infrastructure, both in the control and the
+manages all of the virtual network infrastructure, both in the control and the
 data plane of Openstack. The codebase is big, so it can get a bit complex at
-first, but there is a community of contributors that are very active on IRC,
-where you can ask any question. Note that most developers are usually busy
-people and getting answers might not be something inmediate, but everyone will
-do their best to help new devs to understand Neutron better.
+first, but there is a community of contributors that are very active on
+[IRC](https://docs.openstack.org/contributors/common/irc.html),
+where you can ask any questions. Note that most developers are usually busy
+people and getting answers might not be something immediate, but everyone will
+do their best to help new devs to understand Neutron better. You can also go to
+ the weekly [neutron team meeting](https://meetings.opendev.org/#Neutron_Team_Meeting)
+on IRC.
 
 Check the [**Contributing section**](https://docs.openstack.org/neutron/latest/contributor/contributing.html)
 of Neutron documentation for up to date information!
 
 **[Neutron's Launchpad](https://bugs.launchpad.net/neutron/)** is the tool to
-track bugs from the project. If you already spotted a problem in the code and
-want to report it don't hesitate to report it and fix it, but if you don't know
-where to start and it's your first time in the project, search for bugs tagged
-as _"low-hanging-fruit"_.
+track bugs from the project. If you have already spotted a problem in the code,
+don't hesitate to report it and fix it, but if you don't know where to start
+and it's your first time in the project, search for bugs tagged as
+_"low-hanging-fruit"_.
 
-If you need some help with network basics, Neutron Documentation also has a
-divulgative section for [**networking concepts**]() that are widely used within
-the project.
+If you need some help with network basics, Neutron Documentation also has an
+informative section on [networking concepts](https://docs.openstack.org/neutron/latest/admin/intro-basic-networking.html)
+that are widely used within the project.
 
 
 ## Deploying an environment using Devstack
 
 Once you have chosen your first bug, it's time to replicate it. Because of the
-complexity that most Openstack deployment have, we usually start reproducing
+complexity of most Openstack deployments, we usually start reproducing
 and checking the bugs using
 [**Devstack**](https://docs.openstack.org/devstack/latest/). Devstack is a
 development version of the Openstack environment, and it should not be used as
@@ -58,15 +62,15 @@ component, and it's also used as the base for functional tests. **It is very
 important to run this environment in a VM** since it will make important
 changes in the system during the installation.
 
-The configuration file that you will need to tune depending on the needs of
-your testing is _local.conf_. I use the configuration file that comes with the
-neutron OVN, since that's the kind of environment that I usually want to
+The configuration file that you will need to tune, depending on the needs of
+your testing, is _local.conf_. I use the configuration file that comes with
+neutron for OVN, since that's the kind of environment that I usually want to
 replicate, but this part is really customizable depending on what you need. If
 the bug you want to debug is related to OVN I recommend compiling OVN from
 source instead of downloading it as a package. That way you will get the latest
 master version and not the last stable packaged one. You can check the
 [local.conf](https://github.com/elvgarrui/myconfig/blob/main/ovn_local.conf) I
-use as I'm writing this blog post in case it helps.
+used while writing this blog post in case it helps.
 
 [**This guide for deploying Devstack + OVN**](https://docs.openstack.org/neutron/latest/contributor/testing/ml2_ovn_devstack.html)
 from the documentation is the one that has guided me during the process of
@@ -78,12 +82,12 @@ you are ready to start using the env.
 Some tips regarding this environment:
 - **Don't shut off your VM.** There is not a clean way to restack Devstack after
   a reboot. Since the environment is only for testing and developing, there is
-also not a need to make it persistent, but it's something to bear in mind
+also no need to make it persistent, but it's something to bear in mind
 before powering off your host.
 
 - **Take a snapshot a after a clean deploy.** Since you are going to manipulate
   this system heavily you might get to inconsistent states. It is also not
-recommended to stay in the same environment for months, and one of the points
+recommended to stay in the same environment for months. One of the points
 of Devstack is to have the latest updates from the projects, but keeping the
 same environment for one bug might save you time and a lot of headaches on your
 earlier contributions.
@@ -150,7 +154,7 @@ After that, I create a basic network topology:
 $ openstack network create net1
 $ openstack subnet create --subnet-range 192.168.100.0/24 --network net1 subnet1
 $ openstack router create r1
-$ openstack router add r1 subnet1
+$ openstack router add subnet r1 subnet1
 $ openstack router set --external-gateway public r1 #public is the external network
 $ openstack security group create secgroup1
 $ openstack security group rule create --protocol tcp --dst-port 22 secgroup1
@@ -209,7 +213,7 @@ If you are running the unit tests and want to debug those, you should enter the
 virtual environment created and execute stestr from there, otherwise you won't
 be able to correctly work with the debugging tool:
 ```
-.source .tox/py38/bin/activate
+source .tox/py38/bin/activate
 stestr run -n <test path>
 ```
 
@@ -229,18 +233,21 @@ which contains Neutron scenario tests.
 
 Once you think you have the solution to the problem, you must ensure the code
 is correct before uploading it. If possible, also create at least a unit test
-that ensures your change will stay functional over time.
+that ensures your change will stay functional over time. Before writing your
+unit tests, read this post by Otherwiseguy on
+[how NOT to write Python unit tests](https://blog.otherwiseguy.com/2017/05/17/how-not-to-write-python-unit-tests.html).
+It will help you creating better code on the long run.
 
 The [official
 documentation](https://docs.openstack.org/neutron/latest/contributor/testing/testing.html)
 will provide up-to-date information on how to check your code. **Tox** is the
 main tool that provides a compilation of syntax, unit and functional tests. To
-ensure the **syntax** of your code is correct you must run `tox -w pep8`.
+ensure the **syntax** of your code is correct, you must run `tox -e pep8`.
 **Unit tests** must also pass successfully: `tox -e py38` (the number next to
 py indicates the python version you want to use for testing). Finally, it is
 also nice to ensure functional tests are working as expected. In the Docs you
 will find functional and dsvm-functional. The latter is the one we need to
-check. As advised, please use Devstack withing a VM to execute those.
+check `tox -e dsvm-functional`. As advised, please use Devstack within a VM to execute those.
 
 If you want to check only a certain group of tests, Tox supports filtering, so
 you can do something like this for unit and functional tests:
@@ -254,21 +261,20 @@ gates, and further testing will be performed.
 
 ## Uploading your change!
 
-This blog post assumes you are a bit familiar with git. All projects in
-Openstack are managed using Gerrit, an extension to git that works a bit
-different that what you might be used to in GitHub/GitLab. See more on
-[how to set up your Gerrit account](https://docs.openstack.org/contributors/common/setup-gerrit.html).
+All projects in Openstack are managed using Gerrit, an extension to git that
+works a bit differently than what you might be used to in GitHub/GitLab. See more
+on [how to set up your Gerrit account](https://docs.openstack.org/contributors/common/setup-gerrit.html).
 
 Instead of pull request, commits are reviewed individually (although they can
-be chained). Use `git review` to upload your changes. you do not need to have a
+be chained). Use `git review` to upload your changes. You do not need to have a
 branch dedicated, but it is a good practice to make the changes in a branch
 named after the bug you are solving. It is important that your commit message
-is clear and that the changes that are uploaded to it stick strictly only to
-what you are intended to change.
+is clear and that the changes that are uploaded stick strictly to your intended
+changes.
 
 Your commit will be then reviewed by the community, where each person can
 decide to +1 or -1 your commit. If your commit is -1'd, you will get
-information on why that person decided your commit was not ready yet to be
+information on why that person decided your commit was not yet ready to be
 merged. Core reviewers can give you +2, and when at least 2 core reviewers give
 your commit +2, your code will be ready to be merged!
 
