@@ -158,7 +158,7 @@ $ openstack router add subnet r1 subnet1
 $ openstack router set --external-gateway public r1 #public is the external network
 $ openstack security group create secgroup1
 $ openstack security group rule create --protocol tcp --dst-port 22 secgroup1
-$ openstack security group rule create --protocol icmp
+$ openstack security group rule create --protocol icmp secgroup1
 $ openstack server create --nic net-id=net1 --flavor m1.small --image cirros \
 --security-group secgroup1 server1
 ```
